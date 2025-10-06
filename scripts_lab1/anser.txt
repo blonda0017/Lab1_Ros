@@ -1,0 +1,4 @@
+The first code is broken, I have an error in line 21, 
+and therefore it does not compile. 
+The second code hacks into the secret data, 
+first unsuccessfully and then successfully.
