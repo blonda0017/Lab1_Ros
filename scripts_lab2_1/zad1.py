@@ -6,6 +6,10 @@ def even_numbers_publisher():
     # Инициализация узла
     rospy.init_node('even_numbers_publisher', anonymous=True)
     
+    # Получение имени узла и пространства имен для логирования
+    node_name = rospy.get_name()
+    namespace = rospy.get_namespace()
+    
     # Создание публикаторов
     pub_even = rospy.Publisher('even_numbers', Int32, queue_size=10)
     pub_overflow = rospy.Publisher('overflow_topic', String, queue_size=10)
@@ -16,19 +20,23 @@ def even_numbers_publisher():
     # Счетчик четных чисел
     even_number = 0
     
-    rospy.loginfo("Even numbers publisher started. Publishing at 10 Hz...")
+    rospy.loginfo("Controller %s started in namespace %s. Publishing at 10 Hz...", 
+                  node_name, namespace)
     
     while not rospy.is_shutdown():
         # Публикация четного числа
         pub_even.publish(even_number)
-        rospy.loginfo("Published: %d", even_number)
+        
+        # Логируем только каждое 10-е число для уменьшения спама
+        if even_number % 20 == 0:
+            rospy.loginfo("[%s] Published: %d", node_name, even_number)
         
         # Проверка на переполнение (достигли 100)
         if even_number >= 100:
-            overflow_msg = "Counter overflow! Resetting from {} at time {}".format(
-                even_number, rospy.get_time())
+            overflow_msg = "Counter overflow in {}! Resetting from {} at time {}".format(
+                node_name, even_number, rospy.get_time())
             pub_overflow.publish(overflow_msg)
-            rospy.logwarn(overflow_msg)
+            rospy.logwarn("[%s] %s", node_name, overflow_msg)
             
             # Сброс счетчика
             even_number = 0
