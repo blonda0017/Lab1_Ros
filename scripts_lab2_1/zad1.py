@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 import rospy
-from std_msgs.msg import Int32
+from std_msgs.msg import Int32, String
 
 def even_numbers_publisher():
     # Инициализация узла
     rospy.init_node('even_numbers_publisher', anonymous=True)
     
-    # Создание публикатора
-    pub = rospy.Publisher('even_numbers', Int32, queue_size=10)
+    # Создание публикаторов
+    pub_even = rospy.Publisher('even_numbers', Int32, queue_size=10)
+    pub_overflow = rospy.Publisher('overflow_topic', String, queue_size=10)
     
     # Частота 10 Гц
     rate = rospy.Rate(10)
@@ -19,11 +20,21 @@ def even_numbers_publisher():
     
     while not rospy.is_shutdown():
         # Публикация четного числа
-        pub.publish(even_number)
+        pub_even.publish(even_number)
         rospy.loginfo("Published: %d", even_number)
         
-        # Увеличение на 2 для следующего четного числа
-        even_number += 2
+        # Проверка на переполнение (достигли 100)
+        if even_number >= 100:
+            overflow_msg = "Counter overflow! Resetting from {} at time {}".format(
+                even_number, rospy.get_time())
+            pub_overflow.publish(overflow_msg)
+            rospy.logwarn(overflow_msg)
+            
+            # Сброс счетчика
+            even_number = 0
+        else:
+            # Увеличение на 2 для следующего четного числа
+            even_number += 2
         
         # Ожидание для поддержания частоты 10 Гц
         rate.sleep()
