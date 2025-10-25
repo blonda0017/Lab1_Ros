@@ -1,0 +1,5 @@
+<launch>
+    <!-- Запуск постоянных узлов -->
+    <node pkg="super_blonda_study_pkg" type="polynomial_node.py" name="polynomial_node" output="screen"/>
+    <node pkg="super_blonda_study_pkg" type="summing_node.py" name="summing_node" output="screen"/>
+</launch>
