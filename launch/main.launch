@@ -1,0 +1,14 @@
+<launch>
+  <!-- Объявление аргумента с значением по умолчанию -->
+  <arg name="topic_name" default="default_topic" />
+
+  <!-- Передача аргумента в my_first.launch -->
+  <include file="$(find super_blonda_study_pkg)/launch/my_first.launch">
+    <arg name="topic_name" value="$(arg topic_name)" />
+  </include>
+
+  <!-- Передача аргумента в another_one.launch -->
+  <include file="$(find super_blonda_study_pkg)/launch/another_one.launch">
+    <arg name="topic_name" value="$(arg topic_name)" />
+  </include>
+</launch>

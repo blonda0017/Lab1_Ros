@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(super_blonda_study_pkg)
 
+catkin_install_python(PROGRAMS lab3/sender_node.py lab3/receiver_node.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
 

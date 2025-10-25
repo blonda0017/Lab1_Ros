@@ -1,0 +1,6 @@
+<launch>
+  <arg name="topic_name"/>
+  <node pkg="super_blonda_study_pkg" type="node2.py" name="node2" output="screen">
+    <remap from="chatter" to="$(arg topic_name)"/>
+  </node>
+</launch>
