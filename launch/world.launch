@@ -1,0 +1,19 @@
+<launch>
+    <!-- Статический TF фрейм world -->
+    <node pkg="tf" type="static_transform_publisher" name="world_broadcaster" 
+          args="0 0 0 0 0 0 world turtle1 100" />
+    
+    <!-- Запуск симулятора черепашек -->
+    <node pkg="turtlesim" type="turtlesim_node" name="simulator" output="screen"/>
+    
+    <!-- Запуск управления с клавиатуры -->
+    <node pkg="turtlesim" type="turtle_teleop_key" name="keyboard" output="screen">
+        <remap from="turtle1/cmd_vel" to="turtle1/cmd_vel"/>
+    </node>
+    
+    <!-- Запуск TF broadcaster для первой черепашки -->
+    <node pkg="super_blonda_study_pkg" type="turtle_tf_broadcaster.py" name="turtle1_tf_broadcaster" output="screen">
+        <remap from="input_pose" to="turtle1/pose"/>
+        <param name="turtle_tf_name" value="turtle1"/>
+    </node>
+</launch>

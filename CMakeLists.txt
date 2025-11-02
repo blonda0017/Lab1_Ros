@@ -12,7 +12,10 @@ catkin_install_python(PROGRAMS lab3/sender_node.py lab3/receiver_node.py
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  roscpp
   rospy
+  tf
+  turtlesim
 )
 
 ## System dependencies are found with CMake's conventions
