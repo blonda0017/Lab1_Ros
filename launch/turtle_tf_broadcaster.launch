@@ -7,16 +7,11 @@
         <remap from="turtle1/cmd_vel" to="turtle1/cmd_vel"/>
     </node>
     
-    <!-- Запуск TF broadcaster для первой черепашки -->
-    <node pkg="super_blonda_study_pkg" type="turtle_tf_broadcaster.py" name="turtle1_tf_broadcaster" output="screen">
+    <!-- Запуск TF broadcaster для черепашки и вращающейся морковки -->
+    <node pkg="super_blonda_study_pkg" type="turtle_carrot_broadcaster.py" name="turtle_carrot_broadcaster" output="screen">
         <remap from="input_pose" to="turtle1/pose"/>
         <param name="turtle_tf_name" value="turtle1"/>
     </node>
-    
-    <!-- Статическое TF преобразование от turtle1 к carrot -->
-    <!-- Смещение по X = 0.3 м (перед носом черепашки) -->
-    <node pkg="tf" type="static_transform_publisher" name="turtle1_to_carrot_tf" 
-          args="0.3 0 0 0 0 0 turtle1 carrot 100"/>
     
     <!-- Запуск RVIZ для визуализации -->
     <node pkg="rviz" type="rviz" name="rviz" 
