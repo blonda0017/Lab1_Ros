@@ -1,0 +1,22 @@
+<launch>
+    <!-- Аргументы для настройки запуска -->
+    <arg name="model" default="waffle_pi" doc="Модель TurtleBot3: burger, waffle, waffle_pi" />
+    <arg name="x_pos" default="1.0" doc="Начальная координата X позиции робота" />
+    <arg name="y_pos" default="2.0" doc="Начальная координата Y позиции робота" />
+    <arg name="z_pos" default="0.0" doc="Начальная координата Z позиции робота" />
+    <arg name="gazebo_gui" default="false" doc="Запускать ли GUI Gazebo" />
+    
+    <!-- Запускаем основной мир -->
+    <include file="$(find super_blonda_study_pkg)/launch/turtlebot3_world.launch">
+        <arg name="model" value="$(arg model)" />
+        <arg name="x_pos" value="$(arg x_pos)" />
+        <arg name="y_pos" value="$(arg y_pos)" />
+        <arg name="z_pos" value="$(arg z_pos)" />
+        <arg name="gazebo_gui" value="$(arg gazebo_gui)" />
+    </include>
+    
+    <!-- Дополнительно можно добавить телеоперацию -->
+    <include file="$(find super_blonda_study_pkg)/launch/turtlebot3_teleop_key_modified.launch">
+        <arg name="model" value="$(arg model)" />
+    </include>
+</launch>

@@ -1,0 +1,18 @@
+<launch>
+    <!-- Устанавливаем модель TurtleBot3 -->
+    <arg name="model" default="burger" doc="Модель TurtleBot3: burger, waffle, waffle_pi" />
+    <arg name="x_pos" default="0.0" doc="Начальная координата X позиции робота в мире Gazebo (в метрах)" />
+    <arg name="y_pos" default="0.0" doc="Начальная координата Y позиции робота в мире Gazebo (в метрах)" />
+    <arg name="z_pos" default="0.0" doc="Начальная координата Z позиции робота в мире Gazebo (в метрах)" />
+    <arg name="gazebo_gui" default="false" doc="Запускать ли GUI Gazebo (true/false)" />
+
+    <!-- Только Gazebo мир без SLAM и навигации -->
+    <include file="$(find super_blonda_study_pkg)/launch/turtlebot3_house_modified.launch">
+        <arg name="model" value="$(arg model)" />
+        <arg name="x_pos" value="$(arg x_pos)" />
+        <arg name="y_pos" value="$(arg y_pos)" />
+        <arg name="z_pos" value="$(arg z_pos)" />
+        <arg name="gazebo_gui" value="$(arg gazebo_gui)" />
+    </include>
+
+</launch>
