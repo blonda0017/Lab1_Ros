@@ -1,28 +1,35 @@
 <launch>
-    <!-- Устанавливаем модель TurtleBot3 -->
-    <arg name="model" default="burger" doc="Модель TurtleBot3: burger, waffle, waffle_pi" />
-    <arg name="x_pos" default="0.0" doc="Начальная координата X позиции робота в мире Gazebo (в метрах)" />
-    <arg name="y_pos" default="0.0" doc="Начальная координата Y позиции робота в мире Gazebo (в метрах)" />
-    <arg name="z_pos" default="0.0" doc="Начальная координата Z позиции робота в мире Gazebo (в метрах)" />
-    <arg name="gazebo_gui" default="false" doc="Запускать ли GUI Gazebo (true/false)" />
+  <!-- Аргументы launch-файла -->
+  <arg name="model" default="waffle_pi" 
+       doc="Модель TurtleBot3: burger, waffle или waffle_pi"/>
+  <arg name="x_pos" default="0.0" 
+       doc="Начальная позиция X робота"/>
+  <arg name="y_pos" default="0.0" 
+       doc="Начальная позиция Y робота"/>
+  <arg name="z_pos" default="0.0" 
+       doc="Начальная позиция Z робота"/>
+  <arg name="gazebo_gui" default="true" 
+       doc="Показывать графический интерфейс Gazebo"/>
+  <arg name="world_name" default="$(find turtlebot3_gazebo)/worlds/turtlebot3_world.world" 
+       doc="Мир Gazebo для запуска"/>
+  
+  <!-- Запуск мира Gazebo с TurtleBot3 -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(arg world_name)"/>
+    <arg name="paused" value="false"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="$(arg gazebo_gui)"/> 
+     <!-- Управление GUI через аргумент -->
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
 
-    <!-- Запускаем мир Gazebo с домом (используем модифицированную версию) -->
-    <include file="$(find super_blonda_study_pkg)/launch/turtlebot3_house_modified.launch">
-        <arg name="model" value="$(arg model)" />
-        <arg name="x_pos" value="$(arg x_pos)" />
-        <arg name="y_pos" value="$(arg y_pos)" />
-        <arg name="z_pos" value="$(arg z_pos)" />
-        <arg name="gazebo_gui" value="$(arg gazebo_gui)" />
-    </include>
+  <!-- Загрузка модели робота -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
 
-    <!-- Запускаем навигацию SLAM (полностью модифицированная версия) -->
-    <include file="$(find super_blonda_study_pkg)/launch/turtlebot3_slam_modified.launch">
-        <arg name="model" value="$(arg model)" />
-    </include>
-
-    <!-- move_base для навигации к целям (модифицированная версия) -->
-    <include file="$(find super_blonda_study_pkg)/launch/move_base_modified.launch">
-        <arg name="model" value="$(arg model)" />
-    </include>
-
+  <!-- Спавн робота в Gazebo -->
+  <node pkg="gazebo_ros" type="spawn_model" name="spawn_urdf" 
+        args="-urdf -model turtlebot3_$(arg model) 
+              -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) 
+              -param robot_description"/>
 </launch>

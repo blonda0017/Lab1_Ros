@@ -1,0 +1,12 @@
+<launch>
+    
+    <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_scan_broadcaster" 
+          args="0 0 0.3 0 0 0 base_footprint base_scan 100" />
+          
+    <node pkg="tf" type="static_transform_publisher" name="base_footprint_to_base_link_broadcaster" 
+          args="0 0 0.2 0 0 0 base_footprint base_link 100" />
+
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_base_scan_broadcaster" 
+          args="0 0 0.1 0 0 0 base_link base_scan 100" />
+
+</launch>
