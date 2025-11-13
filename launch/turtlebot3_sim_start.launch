@@ -1,5 +1,5 @@
 <launch>
-
+    <arg name="rviz" default="false" />
     <!-- 1. Запуск симуляции TurtleBot3 -->
     <include file="$(find turtlebot3_gazebo)/launch/turtlebot3_world.launch"/>
     
@@ -15,5 +15,6 @@
     <!-- 4. Запуск Rviz -->
     <node pkg="rviz" type="rviz" name="rviz" 
           args="-d $(find super_blonda_study_pkg)/rviz/sim_initial.rviz"/>
+    <node if="$(arg rviz)" pkg="rviz" type="rviz" name="rviz" args="-d $(find super_blonda_study_package)/rviz/sim_initial.rviz" />
 
 </launch>
