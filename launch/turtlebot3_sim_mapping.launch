@@ -1,0 +1,28 @@
+<launch>
+    <!-- Аргументы -->
+    <arg name="model" default="burger"/>
+    <arg name="rviz" default="true"/>
+    <arg name="rviz_config" default="$(find super_blonda_study_pkg)/rviz/sim_mapping.rviz"/>
+    
+    <!-- Запуск мира Gazebo ЧЕРЕЗ turtlebot3_sim_start.launch -->
+    <include file="$(find super_blonda_study_pkg)/launch/turtlebot3_sim_start.launch">
+        <arg name="model" value="$(arg model)" />
+        <arg name="rviz" value="false" />  
+    </include>
+
+    <!-- Запуск SLAM gmapping -->
+    <include file="$(find super_blonda_study_pkg)/launch/turtlebot3_my_gmapping.launch">
+        <arg name="model" value="$(arg model)" />
+    </include>
+
+    <!-- ДОБАВЛЯЕМ УПРАВЛЕНИЕ КЛАВИАТУРОЙ -->
+    <node pkg="turtlebot3_teleop" type="turtlebot3_teleop_key" name="teleop_keyboard" output="screen">
+        <param name="model" value="$(arg model)"/>
+    </node>
+
+    <!-- Запуск Rviz если нужно -->
+    <group if="$(arg rviz)">
+        <node pkg="rviz" type="rviz" name="rviz" required="true"
+              args="-d $(arg rviz_config)"/>
+    </group>
+</launch>

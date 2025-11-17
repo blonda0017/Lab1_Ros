@@ -1,0 +1,12 @@
+<launch>
+  <!-- Добавляем аргумент model -->
+  <arg name="model" default="burger"/>
+  
+  <node pkg="gmapping" type="slam_gmapping" name="gmapping" output="screen">
+    <!-- Явно указываем топики -->
+    <remap from="scan" to="scan"/>
+    
+    <!-- ЗАГРУЖАЕМ ПАРАМЕТРЫ ИЗ YAML ФАЙЛА -->
+    <rosparam command="load" file="$(find super_blonda_study_pkg)/topic/gmapping_params.yaml" />
+  </node>
+</launch>
