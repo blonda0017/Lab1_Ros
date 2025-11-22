@@ -1,0 +1,45 @@
+# Global Planner Parameters
+# =========================
+
+# Basic parameters
+GlobalPlanner:
+  # Whether to allow the planner to plan through unknown space
+  allow_unknown: true
+  
+  # The tolerance in meters for the goal position
+  default_tolerance: 0.2
+  
+  # Whether to use the Dijkstra algorithm (true) or A* (false)
+  use_dijkstra: true
+  
+  # Whether to use a grid-based path (true) or gradient-based (false)
+  use_grid_path: false
+  
+  # Whether to use quadratic interpolation (true) or linear (false)
+  use_quadratic: true
+  
+  # Visualization and debugging
+  visualize_potential: false
+  
+  # Cost and heuristic settings
+  cost_factor: 3.0
+  neutral_cost: 50
+  lethal_cost: 253
+  publish_scale: 100
+  
+  # Orientation filtering
+  orientation_mode: 0  # 0 = none, 1 = forward, 2 = interpolated, 3 = forward then backward
+  orientation_window_size: 1
+  
+  # Old navfn behavior compatibility
+  old_navfn_behavior: false
+
+# Alternative: NavfnROS parameters (for comparison)
+NavfnROS:
+  allow_unknown: true
+  default_tolerance: 0.5
+  visualize_potential: false
+  use_dijkstra: true
+  use_quadratic: true
+  use_astar: false
+  old_navfn_behavior: false
